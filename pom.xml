@@ -11,4 +11,5 @@
 
     <artifactId>guidance-service</artifactId>
     <version>0.1.0</version>
+    <name>Guidance Service</name>
 </project>
