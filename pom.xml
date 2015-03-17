@@ -28,20 +28,20 @@
         </dependency>
         <dependency>
             <groupId>io.spray</groupId>
-            <artifactId>spray-routing</artifactId>
+            <artifactId>spray-routing_${scala.version.major}</artifactId>
         </dependency>
         <dependency>
             <groupId>io.spray</groupId>
-            <artifactId>spray-can</artifactId>
+            <artifactId>spray-can_${scala.version.major}</artifactId>
         </dependency>
         <dependency>
             <groupId>io.spray</groupId>
-            <artifactId>spray-client</artifactId>
+            <artifactId>spray-client_${scala.version.major}</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.spray</groupId>
-            <artifactId>spray-testkit</artifactId>
+            <artifactId>spray-testkit_${scala.version.major}</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
