@@ -1,6 +1,6 @@
-package net.coro.guidance.service.protocol
+package net.coro.guidance.api.protocol
 
-import net.coro.guidance.service.data.gps.GPRMC
+import net.coro.guidance.api.data.gps.GPRMC
 import spray.http.{HttpEntity, MediaTypes}
 import spray.httpx.marshalling.Marshaller
 import spray.httpx.unmarshalling.Unmarshaller

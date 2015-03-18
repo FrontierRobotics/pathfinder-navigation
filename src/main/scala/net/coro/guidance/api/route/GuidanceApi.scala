@@ -1,11 +1,11 @@
-package net.coro.guidance.service.route
+package net.coro.guidance.api.route
 
-import net.coro.guidance.service.data.gps.GPRMC
+import net.coro.guidance.api.data.gps.GPRMC
 import spray.routing.HttpService
 
 trait GuidanceApi extends HttpService {
   val guidanceRoute = {
-    import net.coro.guidance.service.protocol.GPSProtocol._
+    import net.coro.guidance.api.protocol.GPSProtocol._
 
     path("hello") {
       post {

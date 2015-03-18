@@ -1,8 +1,8 @@
-package net.coro.guidance.service
+package net.coro.guidance.api
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.io.IO
-import net.coro.guidance.service.route.GuidanceApi
+import net.coro.guidance.api.route.GuidanceApi
 import spray.can.Http
 
 object Main extends App {

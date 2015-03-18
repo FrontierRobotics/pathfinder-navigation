@@ -1,4 +1,4 @@
-package net.coro.guidance.service.data.gps
+package net.coro.guidance.api.data.gps
 
 import java.time.LocalTime
 

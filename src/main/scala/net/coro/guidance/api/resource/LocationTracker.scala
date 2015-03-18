@@ -1,4 +1,4 @@
-package net.coro.guidance.service.resource
+package net.coro.guidance.api.resource
 
 import scala.collection.mutable.ArrayBuffer
 
