@@ -1,12 +1,7 @@
 package net.coro.guidance.service.route
 
-import net.coro.guidance.service.Main._
 import net.coro.guidance.service.data.gps.GPRMC
 import spray.routing.HttpService
-
-class GuidanceServiceActor {
-
-}
 
 trait GuidanceApi extends HttpService {
   val guidanceRoute = {
@@ -17,5 +12,11 @@ trait GuidanceApi extends HttpService {
         entity(as[GPRMC])(data => complete(consumeGPRMC(data)))
       }
     }
+  }
+
+  def consumeGPRMC(gprmc: GPRMC): String = {
+    println(gprmc.toString)
+
+    "Data Received"
   }
 }
