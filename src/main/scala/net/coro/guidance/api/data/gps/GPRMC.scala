@@ -2,7 +2,7 @@ package net.coro.guidance.api.data.gps
 
 import java.time.LocalTime
 
-import net.coro.guidance.api.data.{Angle, Location}
+import net.coro.guidance.api.data._
 
 case class GPRMC(time: LocalTime, fixAcquired: Boolean, location: Location)
 
@@ -22,11 +22,11 @@ object GPRMC {
     val degrees = degreesAndMinutes.substring(0, degreeSize).toInt
     val minutes = degreesAndMinutes.substring(degreeSize, degreesAndMinutes.length).toDouble
 
-    if (direction == "N" || direction == "E") {
-      new Angle(degrees, minutes)
-    }
-    else {
-      new Angle(0 - degrees, minutes)
+    direction match {
+      case "N" => new Angle(North, degrees, minutes)
+      case "S" => new Angle(South, degrees, minutes)
+      case "E" => new Angle(East, degrees, minutes)
+      case "W" => new Angle(West, degrees, minutes)
     }
   }
 }
