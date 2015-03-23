@@ -14,7 +14,7 @@ class GuidanceApiTest extends TestSpec with ScalatestRouteTest with GuidanceApi 
     "not handle request" when {
       "given wrong path" in {
         Get("/wrong") ~> guidanceRoute ~> check {
-          handled must be(false)
+          handled mustBe false
         }
       }
     }

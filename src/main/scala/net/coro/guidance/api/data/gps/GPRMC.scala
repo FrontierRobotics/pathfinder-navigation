@@ -39,6 +39,11 @@ object GPRMC {
   }
 
   private def angleFromSentence(angle: String, direction: String, degreeSize: Int): Angle = {
+    if (angle.isEmpty)
+    {
+      return Angle(North, 0, 0.0)
+    }
+
     val degrees = angle.substring(0, degreeSize).toInt
     val minutes = angle.substring(degreeSize, angle.length).toDouble
 
