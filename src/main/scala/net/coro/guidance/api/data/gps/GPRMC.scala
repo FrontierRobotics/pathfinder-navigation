@@ -11,8 +11,6 @@ object GPRMC {
     val parts = sentence.split(",")
     val fixAcquired = parts(2) == "A"
     val dateTime = dateTimeFromSentence(date = parts(9), time = parts(1))
-
-
     val location = locationFromSentence(latitude = parts(3),
                                         latitudeDirection = parts(4),
                                         longitude = parts(5),
