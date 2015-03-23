@@ -4,17 +4,22 @@ import java.time.{LocalDate, LocalDateTime, LocalTime}
 
 import net.coro.guidance.api.data._
 
-case class GPRMC(fixAcquired: Boolean, dateTime: LocalDateTime, location: Location)
+case class GPRMC(fixAcquired: Boolean, dateTime: LocalDateTime, location: Option[Location])
 
 object GPRMC {
   def fromSentence(sentence: String): GPRMC = {
     val parts = sentence.split(",")
     val fixAcquired = parts(2) == "A"
     val dateTime = dateTimeFromSentence(date = parts(9), time = parts(1))
-    val latitude = angleFromSentence(angle = parts(3), direction = parts(4), degreeSize = 2)
-    val longitude = angleFromSentence(angle = parts(5), direction = parts(6), degreeSize = 3)
 
-    GPRMC(fixAcquired, dateTime, Location(latitude, longitude))
+
+    val location = locationFromSentence(latitude = parts(3),
+                                        latitudeDirection = parts(4),
+                                        longitude = parts(5),
+                                        longitudeDirection = parts(6))
+
+
+    GPRMC(fixAcquired, dateTime, location)
   }
 
   private def dateTimeFromSentence(date: String, time: String): LocalDateTime = {
@@ -38,14 +43,23 @@ object GPRMC {
     LocalTime.of(hour, minute, seconds, milliseconds * 1000000)
   }
 
-  private def angleFromSentence(angle: String, direction: String, degreeSize: Int): Angle = {
-    if (angle.isEmpty)
-    {
-      return Angle(North, 0, 0.0)
+  private def locationFromSentence(latitude: String,
+                                   latitudeDirection: String,
+                                   longitude: String,
+                                   longitudeDirection: String): Option[Location] = {
+    if (latitude.isEmpty || latitudeDirection.isEmpty || longitude.isEmpty || longitudeDirection.isEmpty) {
+      return None
     }
 
-    val degrees = angle.substring(0, degreeSize).toInt
-    val minutes = angle.substring(degreeSize, angle.length).toDouble
+    val latitudeAngle = angleFromSentence(latitude, latitudeDirection, degreeSize = 2)
+    val longitudeAngle = angleFromSentence(longitude, longitudeDirection, degreeSize = 3)
+
+    Option(Location(latitudeAngle, longitudeAngle))
+  }
+
+  private def angleFromSentence(degreesAndMinutes: String, direction: String, degreeSize: Int): Angle = {
+    val degrees = degreesAndMinutes.substring(0, degreeSize).toInt
+    val minutes = degreesAndMinutes.substring(degreeSize, degreesAndMinutes.length).toDouble
 
     direction match {
       case "N" => Angle(North, degrees, minutes)

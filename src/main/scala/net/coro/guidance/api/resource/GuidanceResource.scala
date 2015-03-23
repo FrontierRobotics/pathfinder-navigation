@@ -7,7 +7,12 @@ trait GuidanceResource {
 
   def consumeGPRMC(gprmc: GPRMC): String = {
     println(gprmc.toString)
-    locationTracker.updateCurrent(gprmc.location)
+
+    val location = gprmc.location
+
+    if(location.isDefined) {
+      locationTracker.updateCurrent(location.get)
+    }
 
     "Data Received"
   }

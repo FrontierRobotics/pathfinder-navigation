@@ -18,11 +18,17 @@ class GPRMCTest extends TestSpec {
     gprmc.fixAcquired mustBe true
   }
 
+  "The location must not be defined from a void GPRMC sentence" in {
+    val gprmc = GPRMC.fromSentence("$GPRMC,215952.087,V,,,,,0.00,0.00,070180,,,N*44")
+
+    gprmc.location mustBe None
+  }
+
   "The location must parse correctly from an active GPRMC sentence" in {
     val gprmc = GPRMC.fromSentence("$GPRMC,034444.000,A,4110.1833,N,10449.5843,W,1.50,296.10,200315,,,A*7D")
     val expectedLocation = Location(Angle(North, 41, 10.1833), Angle(West, 104, 49.5843))
 
-    gprmc.location mustBe expectedLocation
+    gprmc.location.get mustBe expectedLocation
   }
 
   "The date and time must parse correctly from an active GPRMC sentence" in {
