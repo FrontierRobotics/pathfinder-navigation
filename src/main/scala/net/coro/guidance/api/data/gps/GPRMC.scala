@@ -5,17 +5,17 @@ import java.time.{LocalDate, LocalDateTime, LocalTime}
 
 import net.coro.guidance.api.data._
 
-case class GPRMC(dateTime: LocalDateTime, fixAcquired: Boolean, location: Location)
+case class GPRMC(fixAcquired: Boolean, dateTime: LocalDateTime, location: Location)
 
 object GPRMC {
   def fromSentence(sentence: String): GPRMC = {
     val parts = sentence.split(",")
-    val dateTime = dateTimeFromSentence(parts(1), parts(9))
     val fixAcquired = parts(2) == "A"
+    val dateTime = dateTimeFromSentence(parts(1), parts(9))
     val latitude = angleFromSentence(parts(3), parts(4), 2)
     val longitude = angleFromSentence(parts(5), parts(6), 3)
 
-    GPRMC(dateTime, fixAcquired, Location(latitude, longitude))
+    GPRMC(fixAcquired, dateTime, Location(latitude, longitude))
   }
 
   private def dateTimeFromSentence(time: String, date: String):LocalDateTime = {
