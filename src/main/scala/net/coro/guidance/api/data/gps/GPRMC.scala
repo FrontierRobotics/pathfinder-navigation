@@ -1,21 +1,24 @@
 package net.coro.guidance.api.data.gps
 
-import java.time.LocalTime
+import java.time.{LocalDateTime, LocalTime}
 
 import net.coro.guidance.api.data._
 
-case class GPRMC(time: LocalTime, fixAcquired: Boolean, location: Location)
+case class GPRMC(dateTime: LocalDateTime, fixAcquired: Boolean, location: Location)
 
 object GPRMC {
   def fromSentence(sentence: String): GPRMC = {
     val parts = sentence.split(",")
-    val time = LocalTime.now()
+    val dateTime = dateTimeFromSentence(parts(1), parts(9))
     val fixAcquired = parts(2) == "A"
     val latitude = angleFromSentence(parts(3), parts(4), 2)
     val longitude = angleFromSentence(parts(5), parts(6), 3)
-    val location = new Location(latitude, longitude)
 
-    new GPRMC(time, fixAcquired, location)
+    GPRMC(dateTime, fixAcquired, Location(latitude, longitude))
+  }
+
+  private def dateTimeFromSentence(time: String, date: String) = {
+    LocalDateTime.now()
   }
 
   private def angleFromSentence(angle: String, direction: String, degreeSize: Int): Angle = {
