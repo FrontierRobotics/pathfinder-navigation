@@ -29,7 +29,7 @@ class GuidanceApiTest extends TestSpec with ScalatestRouteTest with GuidanceApi 
 
     "have the current location" when {
       "given a NMEA sentence" in {
-        val expectedLocation = new Location(new Angle(North, 41, 10.1833), new Angle(West, 104, 49.5843))
+        val expectedLocation = Location(Angle(North, 41, 10, 10.998f), Angle(West, 104, 49, 35.058f))
 
         Post("/gps/gprmc", "$GPRMC,034444.000,A,4110.1833,N,10449.5843,W,1.50,296.10,200315,,,A*7D") ~> guidanceRoute ~> check {
           locationTracker.getCurrent.get mustBe expectedLocation

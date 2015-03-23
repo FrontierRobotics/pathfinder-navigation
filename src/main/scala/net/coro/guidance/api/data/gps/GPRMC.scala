@@ -18,15 +18,15 @@ object GPRMC {
     new GPRMC(time, fixAcquired, location)
   }
 
-  def angleFromSentence(degreesAndMinutes: String, direction: String, degreeSize: Int): Angle = {
-    val degrees = degreesAndMinutes.substring(0, degreeSize).toInt
-    val minutes = degreesAndMinutes.substring(degreeSize, degreesAndMinutes.length).toDouble
+  private def angleFromSentence(angle: String, direction: String, degreeSize: Int): Angle = {
+    val degrees = angle.substring(0, degreeSize).toInt
+    val minutes = angle.substring(degreeSize, angle.length).toDouble
 
     direction match {
-      case "N" => new Angle(North, degrees, minutes)
-      case "S" => new Angle(South, degrees, minutes)
-      case "E" => new Angle(East, degrees, minutes)
-      case "W" => new Angle(West, degrees, minutes)
+      case "N" => Angle(North, degrees, minutes)
+      case "E" => Angle(East, degrees, minutes)
+      case "S" => Angle(South, degrees, minutes)
+      case "W" => Angle(West, degrees, minutes)
     }
   }
 }
