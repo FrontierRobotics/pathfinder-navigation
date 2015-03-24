@@ -1,6 +1,6 @@
 package net.coro.guidance.api
 
-case class Velocity(kilometerPerHour: Double)
+case class Velocity(kilometersPerHour: Double)
 
 object Velocity {
   def fromKnots(knots: Double): Velocity = {
