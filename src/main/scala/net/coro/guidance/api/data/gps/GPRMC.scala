@@ -2,22 +2,23 @@ package net.coro.guidance.api.data.gps
 
 import java.time.{LocalDate, LocalDateTime, LocalTime}
 
+import net.coro.guidance.api.Velocity
 import net.coro.guidance.api.data._
 
-case class GPRMC(fixAcquired: Boolean, dateTime: LocalDateTime, location: Option[Location])
+case class GPRMC(fixAcquired: Boolean, dateTime: LocalDateTime, velocity: Velocity, location: Option[Location])
 
 object GPRMC {
   def fromSentence(sentence: String): GPRMC = {
     val parts = sentence.split(",")
     val fixAcquired = parts(2) == "A"
     val dateTime = dateTimeFromSentence(date = parts(9), time = parts(1))
+    val velocity = velocityFromSentence(parts(7))
     val location = locationFromSentence(latitude = parts(3),
                                         latitudeDirection = parts(4),
                                         longitude = parts(5),
                                         longitudeDirection = parts(6))
 
-
-    GPRMC(fixAcquired, dateTime, location)
+    GPRMC(fixAcquired, dateTime, velocity, location)
   }
 
   private def dateTimeFromSentence(date: String, time: String): LocalDateTime = {
@@ -39,6 +40,10 @@ object GPRMC {
     val milliseconds = time.substring(7, time.length).toInt
 
     LocalTime.of(hour, minute, seconds, milliseconds * 1000000)
+  }
+
+  def velocityFromSentence(knots: String): Velocity = {
+    Velocity.fromKnots(knots.toDouble)
   }
 
   private def locationFromSentence(latitude: String,
