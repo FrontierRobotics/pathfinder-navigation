@@ -1,9 +1,9 @@
-package net.coro.guidance.api.data
+package net.coro.guidance.api.data.gps
 
 import java.time.LocalDateTime
 
 import net.coro.TestSpec
-import net.coro.guidance.api.data.gps.GPRMC
+import net.coro.guidance.api.data.{Angle, Location, North, West}
 
 class GPRMCTest extends TestSpec {
   "The fix must not be acquired from a void GPRMC sentence" in {
@@ -36,11 +36,5 @@ class GPRMCTest extends TestSpec {
     val expectedDateTime = LocalDateTime.parse("2015-03-20T03:44:44.000")
 
     gprmc.dateTime mustBe expectedDateTime
-  }
-
-  "The location must convert to Google Maps" in {
-    val location = Location(Angle(North, 41, 10.1833), Angle(West, 104, 49.5843))
-
-    location.toGmaps mustBe "41.16972166670693,-104.826404999627"
   }
 }
